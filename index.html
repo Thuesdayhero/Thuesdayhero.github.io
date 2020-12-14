@@ -19,17 +19,18 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
 .iframe-container{
   position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; 
-  height: 0;
+ 
 }
 .iframe-container iframe{
   position: absolute;
-  top:0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  max-width: 800px;
+  outline: none;
 }
+  @media (max-width:891px){
+    .iframe video {
+      max-width:90%;
+    }
+  }
 </style>
 <body class="w3-black">
 
