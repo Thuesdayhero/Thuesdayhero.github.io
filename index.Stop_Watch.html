@@ -4,12 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stop Watch</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: skyblue;
+            display: flex;
+            align-items: center;
+            justify-self: center;
+        }
+        
+    </style>
 </head>
 <body>
-    <h1><time>00:00:00</time></h1>
- <button id="start">start</button>
+
+<div class="box">
+<h1><time>00:00:00</time></h1>
+<button id="start">start</button>
 <button id="stop">stop</button>
 <button id="clear">clear</button>
+</div>
+
 
    <script>
        var h1 = document.getElementsByTagName('h1')[0],
