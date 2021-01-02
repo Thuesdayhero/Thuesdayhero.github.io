@@ -31,11 +31,16 @@ body{
 <div class="lol" >
    <h2>My Birth day</h2>
    <p id="demo"></p> 
+   <button onclick="goBack()">Go Back</button>
 </div>
 
 
 
 <script>
+
+function goBack() {
+    window.history.back();
+}
 var countDownDate = new Date("Aug 7, 2021 00:00:00").getTime();
 
 
