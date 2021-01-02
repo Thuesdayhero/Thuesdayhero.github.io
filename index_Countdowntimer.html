@@ -18,8 +18,8 @@ body{
 }
 .lol{
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
 }
 </style>
@@ -31,11 +31,16 @@ body{
 <div class="lol" >
    <h2>My Birth day</h2>
    <p id="demo"></p>
+   <button id="go-back">Go back!</button>
 </div>
 
 
 
 <script>
+
+document.getElementById('go-back').addEventListener('click', () => {
+  history.back();
+});
 
 var countDownDate = new Date("Aug 7, 2021 00:00:00").getTime();
 
