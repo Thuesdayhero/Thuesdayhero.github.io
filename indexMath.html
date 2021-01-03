@@ -67,11 +67,23 @@ button{
     border: 1px solid lightgrey;
     border: none;
 }
+.con{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 1200px;) {
+    div{
+        width: 400px;   
+    }
+}
     </style>
 
 </head>
 <body>
-    <div id="box">
+    <div class="con" id="box">
         <div id="primary-number">7</div>
         <div id="add">+</div>
         <div id="secondary-number">10</div>
