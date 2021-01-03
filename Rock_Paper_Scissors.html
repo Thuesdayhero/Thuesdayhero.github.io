@@ -16,7 +16,6 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: arial;
 }
 body{
     background-color: skyblue;
@@ -98,7 +97,6 @@ body{
     </div>
     
     <div class="win-streak">Your win streak is: 0</div>
-    <div id="timer">You have: 30s left!</div>
 
     <script>
         let allOptions = document.querySelector('.options')
@@ -143,14 +141,6 @@ setTimeout(() => {
 }, 31000);
 
 
-setInterval(() => {
-    timeLeft--
-    timer.innerHTML = 'You have: ' + timeLeft + 's left!'
-    if (timeLeft < 0) {
-        timer.innerHTML = 'Time\'s up!'
-    }
-}, 1000)
-
 
 function computerChoice() {
     const choices = ['Rock', 'Paper', 'Scissor']
@@ -171,11 +161,11 @@ function win(playerChoice, computerChoice) {
     playerScore.innerHTML = myScore
     winStreak++
     if (winStreak >= 3) {
-        playerStreakDiv.innerHTML = 'Your win streak is: ' + winStreak + '! You\'re on fire! ðŸ”¥'
+        playerStreakDiv.innerHTML = 'Your win streak is: ' + winStreak 
     } else {
         playerStreakDiv.innerHTML = 'Your win streak is: ' + winStreak
     }
-    results.innerHTML = convertToEmoji(playerChoice) + ' beats ' + convertToEmoji(computerChoice) + '! You won and gained 1 point!'
+    results.innerHTML = convertToEmoji(playerChoice) + ' beats ' + convertToEmoji(computerChoice) + '! You won'
 }
 
 function lose(playerChoice, computerChoice) {
@@ -183,7 +173,7 @@ function lose(playerChoice, computerChoice) {
     compScore.innerHTML = computerScore
     winStreak = 0
     playerStreakDiv.innerHTML = 'Your win streak is : ' + winStreak
-    results.innerHTML = convertToEmoji(playerChoice) + ' loses against ' + convertToEmoji(computerChoice) + '! You lost and the computer gained 1 point!'
+    results.innerHTML = convertToEmoji(playerChoice) + ' loses against ' + convertToEmoji(computerChoice) + '! You lost '
 }
 
 function draw() {
@@ -191,7 +181,7 @@ function draw() {
     draws++
     drawElement.innerHTML = 'Draws: ' + draws
     playerStreakDiv.innerHTML = 'Your win streak is : ' + winStreak
-    results.innerHTML = 'It\'s a draw! Both scores stay the same!'
+    results.innerHTML = 'It\'s a draw! '
 }
 
 
