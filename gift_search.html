@@ -3,79 +3,156 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Animation</title>
+	<title>Document</title>
 	<style>
-		html,body {
-  height: 100%;
-  width: 100%;
+		body{
+	font-size: 20px;
+	font-family: sans-serif;
+	color: #333;
 }
-#MySVG {
-  height: 100%;
-  width: 100%;
-  background: black;
+.question{
+	font-weight: 600;
+}
+.answers {
+  margin-bottom: 20px;
+}
+.answers label{
+  display: block;
+}
+#submit{
+	font-family: sans-serif;
+	font-size: 20px;
+	background-color: #279;
+	color: #fff;
+	border: 0px;
+	border-radius: 3px;
+	padding: 20px;
+	cursor: pointer;
+	margin-bottom: 20px;
+}
+#submit:hover{
+	background-color: #38a;
 }
 	</style>
 </head>
 <body>
-	<div id="MySVG">
-	</div>
+	<div id="quiz"></div>
+<button id="submit">Submit Quiz</button>
+<div id="results"></div>
 
-	<script>
-		/***** 
+<script>
+	(function(){
+  function buildQuiz(){
+    // variable to store the HTML output
+    const output = [];
 
-Implemented using I2Djs framework
+    // for each question...
+    myQuestions.forEach(
+      (currentQuestion, questionNumber) => {
 
-https://nswamy14.gitbook.io/i2djs/
-https://github.com/I2Djs/I2Djs   
+        // variable to store the list of possible answers
+        const answers = [];
 
-****/
+        // and for each available answer...
+        for(letter in currentQuestion.answers){
 
-var renderer_ = i2d.svgLayer('#MySVG', { });
-var parallelChain = i2d.chain.parallelChain().loop(10)
-var circlesCount = 100
-var radius = 100
-
-var g = renderer_.createEl({
-    el: 'group',
-    attr: {
-        transform: {
-            translate: [renderer_.width / 2, renderer_.height / 2]
+          // ...add an HTML radio button
+          answers.push(
+            `<label>
+              <input type="radio" name="question${questionNumber}" value="${letter}">
+              ${letter} :
+              ${currentQuestion.answers[letter]}
+            </label>`
+          );
         }
+
+        // add this question and its answers to the output
+        output.push(
+          `<div class="question"> ${currentQuestion.question} </div>
+          <div class="answers"> ${answers.join('')} </div>`
+        );
+      }
+    );
+
+    // finally combine our output list into one string of HTML and put it on the page
+    quizContainer.innerHTML = output.join('');
+  }
+
+  function showResults(){
+
+    // gather answer containers from our quiz
+    const answerContainers = quizContainer.querySelectorAll('.answers');
+
+    // keep track of user's answers
+    let numCorrect = 0;
+
+    // for each question...
+    myQuestions.forEach( (currentQuestion, questionNumber) => {
+
+      // find selected answer
+      const answerContainer = answerContainers[questionNumber];
+      const selector = `input[name=question${questionNumber}]:checked`;
+      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+      // if answer is correct
+      if(userAnswer === currentQuestion.correctAnswer){
+        // add to the number of correct answers
+        numCorrect++;
+
+        // color the answers green
+        answerContainers[questionNumber].style.color = 'lightgreen';
+      }
+      // if answer is wrong or blank
+      else{
+        // color the answers red
+        answerContainers[questionNumber].style.color = 'red';
+      }
+    });
+
+    // show number of correct answers out of total
+    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+  }
+
+  const quizContainer = document.getElementById('quiz');
+  const resultsContainer = document.getElementById('results');
+  const submitButton = document.getElementById('submit');
+  const myQuestions = [
+    {
+      question: "Who invented JavaScript?",
+      answers: {
+        a: "Douglas Crockford",
+        b: "Sheryl Sandberg",
+        c: "Brendan Eich"
+      },
+      correctAnswer: "c"
+    },
+    {
+      question: "Which one of these is a JavaScript package manager?",
+      answers: {
+        a: "Node.js",
+        b: "TypeScript",
+        c: "npm"
+      },
+      correctAnswer: "c"
+    },
+    {
+      question: "Which tool can you use to ensure code quality?",
+      answers: {
+        a: "Angular",
+        b: "jQuery",
+        c: "RequireJS",
+        d: "ESLint"
+      },
+      correctAnswer: "d"
     }
-})
+  ];
 
-g.createEls((new Array(circlesCount)).fill().map(function(d, i) {
-        return i
-    }), { 
-        el: 'circle',
-        attr: {
-            r: 5,
-            cx: 0,
-            cy: 0
-        },
-        style: {
-            fill: function(d) {
-                return 'hsl(' + ((d % 50) / 50) * 360 + ',70%, 50%)'
-            }
-        }
-    })
-    .exec(animateEachCircle)
+  // Kick things off
+  buildQuiz();
 
-function animateEachCircle(d) {
-    parallelChain.add(this.animateExe({
-        duration: 2000,
-        delay: (d % 50) * 30,
-        ease: 'easeInOutSin',
-        attr: function(f) {
-            this.setAttr({
-                cx: radius * Math.cos(f * Math.PI * 2 + Math.PI * Math.floor(d / 50)) + (-radius + Math.floor(d / 50) * radius * 2),
-                cy: radius * Math.sin(f * Math.PI * 2 + Math.PI * Math.floor(d / 50))
-            })
-        }
-    }))
-}
-
-parallelChain.start()
-	</script>
+  // Event listeners
+  submitButton.addEventListener('click', showResults);
+})();
+</script>
 </body>
 </html>
