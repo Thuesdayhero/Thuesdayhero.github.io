@@ -54,15 +54,15 @@
 			imgElements.forEach(function(img){
 				img.remove()
 			})		
-			let response = await fetch("http://api.giphy.com/v1/gifs/search?api_key=72zXIbmPlQJq1qL0hXTTqqfKWh2viLnE=" + InputPHP.value);
-			let json = await response.json();
+			let response = await fetch("http://api.giphy.com/v1/gifs/search?api_key=6cIAQBR17BxW1XIXw8UkvI2ozJAbrKxX&q=" + InputPHP.value)
+			let json = await response.json()
 			let main = json.data
 			main.forEach(function (element) {
 				const img = document.createElement("img")
 				img.src = element.images.fixed_height.url
 				document.body.append(img)
-			});
-		};
+			})
+		}
 		//4
 	  
 	</script>
