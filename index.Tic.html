@@ -186,9 +186,9 @@ button,
 		<script>
             const DOM = (() => {
 	return {
-		//Human or AI
+		
 		selection: document.querySelectorAll('.selection'),
-		//Select Human/AI
+	
 		makeActive: function (e) {
 			e.target.parentNode.querySelectorAll('.selection').forEach((child) => {
 				child.classList.remove('active');
@@ -208,7 +208,7 @@ button,
 		},
 
 		boardContainer: document.querySelector('.gameboard'),
-		//fetch current squares
+		
 		getSquares: function () {
 			return this.boardContainer.querySelectorAll('.square');
 		},
@@ -266,23 +266,23 @@ button,
 })();
 
 const Gameboard = (() => {
-	//each square saved as an object with a mark property, which can either be an empty string, 'X', or 'O'
+
 	const square = {
 		mark: '',
 	};
-	//board saved as array
+
 	const board = [];
-	//board is inaccessible to other modules, but they can fetch it
+
 	const getBoard = () => {
 		return board;
 	};
-	//controlled board manipulation sent to the game controller
+
 	const newMarker = (mark, index) => {
 		board[index] = { mark };
 		DOM.render(board);
 	};
 
-	// game board load
+	
 	const init = () => {
 		for (let count = 1; count <= 9; count++) {
 			board.push(square);
@@ -290,7 +290,7 @@ const Gameboard = (() => {
 		DOM.render(getBoard());
 	};
 
-	// make these available to other modules
+
 	return {
 		getBoard,
 		init,
@@ -299,7 +299,7 @@ const Gameboard = (() => {
 })();
 
 const Controller = (() => {
-	//type is decided in start screen
+	
 	const player1 = {
 		name: 'Player 1',
 		marker: 'X',
@@ -311,9 +311,9 @@ const Controller = (() => {
 		marker: 'O',
 		type: '',
 	};
-	//turn counter
+	
 	let player1turn = true;
-	//page load selection screen
+
 	const init = () => {
 		DOM.selection.forEach((element) => {
 			element.addEventListener('click', DOM.makeActive);
@@ -326,11 +326,11 @@ const Controller = (() => {
 				}
 			});
 	};
-	//toggle turn
+
 	playerToggle = () => {
 		player1turn = !player1turn;
 	};
-	//before starting, make sure the type of player is selected for each
+	
 	const selectionCheck = () => {
 		return Boolean(player1.type && player2.type);
 	};
@@ -341,7 +341,7 @@ const Controller = (() => {
 		takeTurn();
 	};
 
-	//check the board for every win condition
+
 	const checkWinner = () => {
 		const board = Gameboard.getBoard();
 		const winConditions = [
@@ -354,7 +354,7 @@ const Controller = (() => {
 			[0, 4, 8],
 			[2, 4, 6],
 		];
-		//if any of the conditions are true, stop the game and announce the winner in the console
+	
 		if (
 			winConditions.some((array) => {
 				let winCheck = [];
@@ -385,7 +385,7 @@ const Controller = (() => {
 			})
 		) {
 			return true;
-			//if the board has 9 marks without a winner, it's a tie
+		
 		} else if (
 			board.filter((square) => {
 				return square.mark !== '';
@@ -395,7 +395,7 @@ const Controller = (() => {
 			return true;
 		} else return false;
 	};
-	// AI...sort of...
+
 	const computerPlay = (marker) => {
 		let choices = Gameboard.getBoard().map((square, index) => {
 			if (square.mark !== '') {
@@ -428,7 +428,7 @@ const Controller = (() => {
 			});
 		});
 	};
-	//flow controller, checks winner, swaps the player turn indicator
+	
 	const takeTurn = () => {
 		if (!checkWinner()) {
 			let player;
@@ -445,9 +445,9 @@ const Controller = (() => {
 			}
 		} else console.log('Winner found, stopping game');
 	};
-	//load the game
+
 	init();
-	//export so the DOM can set their types
+
 	return {
 		player1,
 		player2,
